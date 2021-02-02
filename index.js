@@ -9,4 +9,6 @@ app.get("/mensagens", (req, res) => {
   res.send("exibir todas as mensagens");
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.info("Servidor rodando em http://localhost:3000");
+});
