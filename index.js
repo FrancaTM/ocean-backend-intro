@@ -13,7 +13,9 @@ app.get("/", (req, res) => {
 
 // Create
 app.post("/mensagens", (req, res) => {
-  res.send(req.body.text);
+  const mensagem = req.body.text;
+  mensagens.push(mensagem);
+  res.send("mensagem criada com sucesso");
 });
 
 // Read all
