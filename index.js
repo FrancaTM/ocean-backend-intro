@@ -5,7 +5,16 @@ const app = express();
 app.use(bodyParser.json());
 
 const port = 3000;
-const mensagens = ["Primeira mensagem", "Segunda mensagem"];
+const mensagens = [
+  {
+    id: 1,
+    texto: "Primeira mensagem",
+  },
+  {
+    id: 2,
+    texto: "Segunda mensagem",
+  },
+];
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -13,7 +22,8 @@ app.get("/", (req, res) => {
 
 // Create
 app.post("/mensagens", (req, res) => {
-  const mensagem = req.body.text;
+  const mensagem = req.body;
+  mensagem.id = mensagens.length + 1;
   mensagens.push(mensagem);
   res.send("mensagem criada com sucesso");
 });
@@ -25,23 +35,27 @@ app.get("/mensagens", (req, res) => {
 
 // Read single
 app.get("/mensagens/:id", (req, res) => {
-  const id = req.params.id - 1;
-  const mensagem = mensagens[id];
+  const id = +req.params.id;
+  const mensagem = mensagens.find((msg) => msg.id === id);
   res.send(mensagem);
 });
 
 // Update
 app.put("/mensagens/:id", (req, res) => {
-  const id = req.params.id - 1;
-  const mensagem = req.body.text;
-  mensagens[id] = mensagem;
+  const id = +req.params.id;
+  const mensagem = req.body;
+  mensagem.id = id;
+  const index = mensagens.findIndex((msg) => msg.id === id);
+  mensagens[index] = mensagem;
+
   res.send("mensagem editada com sucesso");
 });
 
 // Delete
 app.delete("/mensagens/:id", (req, res) => {
-  const id = req.params.id - 1;
-  delete mensagens[id];
+  const id = +req.params.id;
+  const index = mensagens.findIndex((msg) => msg.id === id);
+  delete mensagens[index];
   res.send("mensagem removida com sucesso");
 });
 
