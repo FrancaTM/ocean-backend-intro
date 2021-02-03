@@ -23,6 +23,13 @@ app.get("/mensagens", (req, res) => {
   res.send(mensagens);
 });
 
+// Read single
+app.get("/mensagens/:id", (req, res) => {
+  const id = req.params.id - 1;
+  const mensagem = mensagens[id];
+  res.send(mensagem);
+});
+
 app.listen(port, () => {
   console.info("Servidor rodando em http://localhost:" + port);
 });
