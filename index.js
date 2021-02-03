@@ -30,6 +30,14 @@ app.get("/mensagens/:id", (req, res) => {
   res.send(mensagem);
 });
 
+// Update
+app.put("/mensagens/:id", (req, res) => {
+  const id = req.params.id - 1;
+  const mensagem = req.body.text;
+  mensagens[id] = mensagem;
+  res.send("mensagem editada com sucesso");
+});
+
 app.listen(port, () => {
   console.info("Servidor rodando em http://localhost:" + port);
 });
