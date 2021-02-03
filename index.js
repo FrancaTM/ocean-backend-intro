@@ -38,6 +38,13 @@ app.put("/mensagens/:id", (req, res) => {
   res.send("mensagem editada com sucesso");
 });
 
+// Delete
+app.delete("/mensagens/:id", (req, res) => {
+  const id = req.params.id - 1;
+  delete mensagens[id];
+  res.send("mensagem removida com sucesso");
+});
+
 app.listen(port, () => {
   console.info("Servidor rodando em http://localhost:" + port);
 });
