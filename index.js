@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const MongoClient = require("mongodb").MongoClient;
+const { MongoClient, ObjectId } = require("mongodb");
 
 (async () => {
   const url = "mongodb://localhost:27017";
@@ -39,9 +39,9 @@ const MongoClient = require("mongodb").MongoClient;
   });
 
   // Read single
-  app.get("/mensagens/:id", (req, res) => {
-    const id = +req.params.id;
-    const mensagem = mensagens.find((msg) => msg.id === id);
+  app.get("/mensagens/:id", async (req, res) => {
+    const id = req.params.id;
+    const mensagem = await mensagens.findOne({ _id: ObjectId(id) });
     res.send(mensagem);
   });
 
