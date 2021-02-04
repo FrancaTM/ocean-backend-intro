@@ -33,9 +33,9 @@ const { MongoClient, ObjectId } = require("mongodb");
   });
 
   // Read all
-  app.get("/mensagens", (req, res) => {
+  app.get("/mensagens", async (req, res) => {
     // TODO: fix!
-    // res.send(await mensagens.find().toArray());
+    res.send(await mensagens.find().toArray());
   });
 
   // Read single
@@ -56,10 +56,9 @@ const { MongoClient, ObjectId } = require("mongodb");
   });
 
   // Delete
-  app.delete("/mensagens/:id", (req, res) => {
-    const id = +req.params.id;
-    const index = mensagens.findIndex((msg) => msg.id === id);
-    delete mensagens[index];
+  app.delete("/mensagens/:id", async (req, res) => {
+    const id = req.params.id;
+    await mensagens.deleteOne({ _id: ObjectId(id) });
     res.send("mensagem removida com sucesso");
   });
 
