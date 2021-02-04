@@ -25,11 +25,10 @@ const { MongoClient, ObjectId } = require("mongodb");
   });
 
   // Create
-  app.post("/mensagens", (req, res) => {
+  app.post("/mensagens", async (req, res) => {
     const mensagem = req.body;
-    mensagem.id = mensagens.length + 1;
-    mensagens.push(mensagem);
-    res.send("mensagem criada com sucesso");
+    await mensagens.insertOne(mensagem);
+    res.send(mensagem);
   });
 
   // Read all
