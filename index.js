@@ -50,7 +50,7 @@ const { MongoClient, ObjectId } = require("mongodb");
     const id = req.params.id;
     const mensagem = req.body;
 
-    await mensagens.updateOne({ _id: ObjectId(id) }, { ...mensagem });
+    await mensagens.updateOne({ _id: ObjectId(id) }, { $set: { ...mensagem } });
 
     res.send("mensagem editada com sucesso");
   });
