@@ -46,12 +46,11 @@ const { MongoClient, ObjectId } = require("mongodb");
   });
 
   // Update
-  app.put("/mensagens/:id", (req, res) => {
-    const id = +req.params.id;
+  app.put("/mensagens/:id", async (req, res) => {
+    const id = req.params.id;
     const mensagem = req.body;
-    mensagem.id = id;
-    const index = mensagens.findIndex((msg) => msg.id === id);
-    mensagens[index] = mensagem;
+
+    await mensagens.updateOne({ _id: ObjectId(id) }, { ...mensagem });
 
     res.send("mensagem editada com sucesso");
   });
